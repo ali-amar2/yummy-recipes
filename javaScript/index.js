@@ -368,9 +368,10 @@ async function displayContact() {
   const ageRegex = /^[1-9][0-9]*$/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-  function validateInput(input, regex, warning) {
+  // validateInput يقبل باراميتر لتحديد إذا كان يظهر رسالة ولا لأ
+  function validateInput(input, regex, warning, showWarning = true) {
     if (!regex.test(input.val().trim())) {
-      warning.removeClass("d-none");
+      if (showWarning) warning.removeClass("d-none");
       return false;
     } else {
       warning.addClass("d-none");
@@ -400,26 +401,29 @@ async function displayContact() {
 
   function checkFormValidity() {
     const isFormValid =
-      validateInput(nameInput, nameRegex, $(".nameWarning")) &&
-      validateInput(emailInput, emailRegex, $(".emailWarning")) &&
-      validateInput(phoneInput, phoneRegex, $(".phoneWarning")) &&
-      validateInput(ageInput, ageRegex, $(".ageWarning")) &&
+      validateInput(nameInput, nameRegex, $(".nameWarning"), false) &&
+      validateInput(emailInput, emailRegex, $(".emailWarning"), false) &&
+      validateInput(phoneInput, phoneRegex, $(".phoneWarning"), false) &&
+      validateInput(ageInput, ageRegex, $(".ageWarning"), false) &&
       validatePasswords(false);
 
     submitBtn.toggleClass("disabled", !isFormValid);
   }
 
+  // Events: الرسالة تظهر فقط عند blur
   nameInput.on("blur", () =>
-    validateInput(nameInput, nameRegex, $(".nameWarning"))
+    validateInput(nameInput, nameRegex, $(".nameWarning"), true)
   );
+
   emailInput.on("blur", () =>
-    validateInput(emailInput, emailRegex, $(".emailWarning"))
+    validateInput(emailInput, emailRegex, $(".emailWarning"), true)
   );
+
   phoneInput.on("blur", () =>
-    validateInput(phoneInput, phoneRegex, $(".phoneWarning"))
+    validateInput(phoneInput, phoneRegex, $(".phoneWarning"), true)
   );
   ageInput.on("blur", () =>
-    validateInput(ageInput, ageRegex, $(".ageWarning"))
+    validateInput(ageInput, ageRegex, $(".ageWarning"), true)
   );
   passwordInput.on("blur", () => validatePasswords(true));
   repasswordInput.on("blur", () => validatePasswords(true));
