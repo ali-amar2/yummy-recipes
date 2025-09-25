@@ -4,6 +4,7 @@ const sideNav = $(".side-nav-menu");
 const openIcon = $(".open-close-icon");
 const navLinks = $(".nav-links ul li");
 const container = $(".container .row");
+const gobackArrow = $(".goback");
 
 // ! Variables
 let isOpen;
@@ -495,4 +496,7 @@ $(".search").on("click", function () {
   });
   isOpen = false;
   displaySearchInputs();
+});
+$(".gobackArrow").on("click", function () {
+  displayMeals();
 });
